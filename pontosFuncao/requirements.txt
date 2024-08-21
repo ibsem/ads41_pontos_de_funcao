@@ -1,0 +1,7 @@
+Flask
+pymongo
+Flask-WTF
+python-dotenv
+pdfkit
+Flask-PyMongo
+reportlab

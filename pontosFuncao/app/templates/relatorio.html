@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Relatório de Sistema{% endblock %}
+{% block content %}
+    <h1>Relatório de Sistema: {{ sistema.nome }}</h1>
+    <h2>Dados do Sistema</h2>
+    <p><strong>Cliente:</strong> {{ sistema.cliente }}</p>
+    <p><strong>Contato:</strong> {{ sistema.contato }}</p>
+    <p><strong>Telefone:</strong> {{ sistema.telefone }}</p>
+
+    <h2>Entidades Mensuradas</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tipo de Entidade</th>
+                <th>Complexidade Escolhida</th>
+                <th>Valor (Pontos de Função)</th>  <!-- Nova coluna para valor da complexidade -->
+                <th>Observações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mensuracao in mensuracoes %}
+            <tr>
+                <td>{{ mensuracao.tipo_entidade.nome }}</td>
+                <td>{{ mensuracao.complexidade_escolhida }}</td>
+                <td>{{ mensuracao.tipo_entidade['complexidade_' + mensuracao.complexidade_escolhida] }}</td>  <!-- Exibe o valor correspondente à complexidade -->
+                <td>{{ mensuracao.observacoes }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Resumo</h2>
+    <p><strong>Total de Pontos de Função:</strong> {{ total_pontos }}</p>
+    <p><strong>Total de Horas:</strong> {{ total_horas }}</p>
+    <p><strong>Custo Total:</strong> R$ {{ custo_total }}</p>
+
+    <hr> <!-- Linha para separar o relatório da nota de rodapé -->
+
+    <!-- Estilo para fontes menores -->
+    <div style="font-size: 0.7em;line-height: 1.2em;">
+        <h5>Referências Utilizadas</h5>
+        <p><strong>Parâmetros Utilizados:</strong></p>
+        <ul style="margin-bottom: 0.2; padding-left: 1.2em; list-style-position: inside;">
+            <li><strong>Valor Hora Homem:</strong> R$ {{ parametros.valor_hora_homem }}</li>
+            <li><strong>Quantidade de Horas por Ponto de Função:</strong> {{ parametros.qtd_horas_ponto_funcao }}</li>
+        </ul>
+
+        <p><strong>Classificações por Tipo de Entidade:</strong></p>
+        <table class="table table-bordered" style="margin-bottom: 0;">
+            <thead>
+                <tr>
+                    <th>Tipo de Entidade</th>
+                    <th>Complexidade Baixa</th>
+                    <th>Complexidade Média</th>
+                    <th>Complexidade Alta</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entidade in todas_entidades %}
+                <tr>
+                    <td>{{ entidade.nome }}</td>
+                    <td>{{ entidade.complexidade_baixa }}</td>
+                    <td>{{ entidade.complexidade_media }}</td>
+                    <td>{{ entidade.complexidade_alta }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

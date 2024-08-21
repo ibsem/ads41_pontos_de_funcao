@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Tipos de Entidade{% endblock %}
+{% block content %}
+    <h1>Tipos de Entidade</h1>
+    <a href="{{ url_for('main.create_tipo_entidade') }}" class="btn btn-primary mb-3">Adicionar Tipo de Entidade</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Complexidade Baixa</th>
+                <th>Complexidade Média</th>
+                <th>Complexidade Alta</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tipo in tipos %}
+            <tr>
+                <td>{{ tipo.nome }}</td>
+                <td>{{ tipo.descricao }}</td>
+                <td>{{ tipo.complexidade_baixa }}</td>
+                <td>{{ tipo.complexidade_media }}</td>
+                <td>{{ tipo.complexidade_alta }}</td>
+                <td>
+                    <a href="{{ url_for('main.edit_tipo_entidade', tipo_id=tipo._id) }}" class="btn btn-info">Editar</a>
+                    <form action="{{ url_for('main.delete_tipo_entidade', tipo_id=tipo._id) }}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Configuração de Parâmetros{% endblock %}
+{% block content %}
+    <h1>Configuração de Parâmetros</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.valor_hora_homem.label(class="form-label") }}
+            {{ form.valor_hora_homem(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.qtd_horas_ponto_funcao.label(class="form-label") }}
+            {{ form.qtd_horas_ponto_funcao(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Atualizar Parâmetros</button>
+    </form>
+{% endblock %}

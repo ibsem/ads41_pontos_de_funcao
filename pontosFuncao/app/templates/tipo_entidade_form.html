@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.nome.label(class="form-label") }}
+            {{ form.nome(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.descricao.label(class="form-label") }}
+            {{ form.descricao(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.complexidade_baixa.label(class="form-label") }}
+            {{ form.complexidade_baixa(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.complexidade_media.label(class="form-label") }}
+            {{ form.complexidade_media(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.complexidade_alta.label(class="form-label") }}
+            {{ form.complexidade_alta(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="{{ url_for('main.tipos_entidade') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+{% endblock %}
+
+

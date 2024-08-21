@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Mensurações para {{ sistema.nome }}{% endblock %}
+{% block content %}
+    <h1>Mensurações para {{ sistema.nome }}</h1>
+    <h2>{% if mensuracao %}Editar{% else %}Adicionar{% endif %} Mensuração</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.tipo_entidade_id.label(class="form-label") }}
+            {{ form.tipo_entidade_id(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.complexidade_escolhida.label(class="form-label") }}
+            {{ form.complexidade_escolhida(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.observacoes.label(class="form-label") }}
+            {{ form.observacoes(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">{% if mensuracao %}Salvar Alterações{% else %}Adicionar Entidade{% endif %}</button>
+    </form>
+
+    <h2>Lista de Mensurações</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tipo de Entidade</th>
+                <th>Complexidade Escolhida</th>
+                <th>Observações</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mensuracao in mensuracoes %}
+            <tr>
+                <td>{{ mensuracao.tipo_entidade_nome }}</td>
+                <td>{{ mensuracao.complexidade_escolhida }}</td>
+                <td>{{ mensuracao.observacoes }}</td>
+                <td>
+                    <a href="{{ url_for('main.edit_mensuracao', sistema_id=sistema._id, mensuracao_id=mensuracao._id) }}" class="btn btn-warning">Editar</a>
+                    <form action="{{ url_for('main.delete_mensuracao', sistema_id=sistema._id, mensuracao_id=mensuracao._id) }}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Remover</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+

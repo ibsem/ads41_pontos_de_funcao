@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Página Inicial{% endblock %}
+{% block content %}
+    <h1>Página Inicial</h1>
+    <a href="{{ url_for('main.create_sistema') }}" class="btn btn-primary">Criar Novo Sistema</a>
+    <h2>Sistemas Cadastrados</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nome do Sistema</th>
+                <th>Cliente</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sistema in sistemas %}
+            <tr>
+                <td>{{ sistema.nome }}</td>
+                <td>{{ sistema.cliente }}</td>
+                <td>
+                    <a href="{{ url_for('main.edit_sistema', sistema_id=sistema._id) }}" class="btn btn-secondary">Editar</a>
+                    <a href="{{ url_for('main.relatorio', sistema_id=sistema._id) }}" class="btn btn-info">Ver Relatório</a>
+                    <form action="{{ url_for('main.delete_sistema', sistema_id=sistema._id) }}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
