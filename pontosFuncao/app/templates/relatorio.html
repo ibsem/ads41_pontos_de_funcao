@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% block title %}Relatório de Sistema{% endblock %}
 {% block content %}
-    <h1>Relatório de Sistema: {{ sistema.nome }}</h1>
-    <h2>Dados do Sistema</h2>
+    <h3>Relatório de Sistema: {{ sistema.nome }}</h3>
+    <h4>Dados do Sistema</h4>
     <p><strong>Cliente:</strong> {{ sistema.cliente }}</p>
     <p><strong>Contato:</strong> {{ sistema.contato }}</p>
     <p><strong>Telefone:</strong> {{ sistema.telefone }}</p>
 
-    <h2>Entidades Mensuradas</h2>
+    <h4>Entidades Mensuradas</h4>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Tipo de Entidade</th>
                 <th>Complexidade Escolhida</th>
-                <th>Valor (Pontos de Função)</th>  <!-- Nova coluna para valor da complexidade -->
+                <th>Valor (Pontos de Função)</th>
                 <th>Observações</th>
             </tr>
         </thead>
@@ -22,22 +22,21 @@
             <tr>
                 <td>{{ mensuracao.tipo_entidade.nome }}</td>
                 <td>{{ mensuracao.complexidade_escolhida }}</td>
-                <td>{{ mensuracao.tipo_entidade['complexidade_' + mensuracao.complexidade_escolhida] }}</td>  <!-- Exibe o valor correspondente à complexidade -->
+                <td>{{ mensuracao.tipo_entidade['complexidade_' + mensuracao.complexidade_escolhida] }}</td>
                 <td>{{ mensuracao.observacoes }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <h2>Resumo</h2>
+    <h4>Resumo</h4>
     <p><strong>Total de Pontos de Função:</strong> {{ total_pontos }}</p>
     <p><strong>Total de Horas:</strong> {{ total_horas }}</p>
     <p><strong>Custo Total:</strong> R$ {{ custo_total }}</p>
 
-    <hr> <!-- Linha para separar o relatório da nota de rodapé -->
+    <hr>
 
-    <!-- Estilo para fontes menores -->
-    <div style="font-size: 0.7em;line-height: 1.2em;">
+    <div style="font-size: 0.7em; line-height: 1.2em;">
         <h5>Referências Utilizadas</h5>
         <p><strong>Parâmetros Utilizados:</strong></p>
         <ul style="margin-bottom: 0.2; padding-left: 1.2em; list-style-position: inside;">
@@ -66,5 +65,11 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <!-- Botão para gerar PDF -->
+        <a href="{{ url_for('main.relatorio_pdf', sistema_id=sistema._id) }}" class="btn btn-primary">
+            <i class="bi bi-file-earmark-pdf"></i> Gerar PDF
+        </a>
+        
     </div>
 {% endblock %}

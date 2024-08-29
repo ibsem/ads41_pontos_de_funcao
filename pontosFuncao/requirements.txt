@@ -5,3 +5,4 @@ python-dotenv
 pdfkit
 Flask-PyMongo
 reportlab
+flask_weasyprint

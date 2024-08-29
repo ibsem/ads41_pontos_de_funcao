@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Mensurações para {{ sistema.nome }}{% endblock %}
 {% block content %}
-    <h1>Mensurações para {{ sistema.nome }}</h1>
-    <h2>{% if mensuracao %}Editar{% else %}Adicionar{% endif %} Mensuração</h2>
+    <h3>Mensurações para {{ sistema.nome }}</h3>
+    <h4>{% if mensuracao %}Editar{% else %}Adicionar{% endif %} Mensuração</h4>
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <div class="mb-3">
@@ -20,7 +20,7 @@
         <button type="submit" class="btn btn-primary">{% if mensuracao %}Salvar Alterações{% else %}Adicionar Entidade{% endif %}</button>
     </form>
 
-    <h2>Lista de Mensurações</h2>
+    <h4>Lista de Mensurações</h4>
     <table class="table">
         <thead>
             <tr>
@@ -37,10 +37,16 @@
                 <td>{{ mensuracao.complexidade_escolhida }}</td>
                 <td>{{ mensuracao.observacoes }}</td>
                 <td>
-                    <a href="{{ url_for('main.edit_mensuracao', sistema_id=sistema._id, mensuracao_id=mensuracao._id) }}" class="btn btn-warning">Editar</a>
+                    <a href="{{ url_for('main.edit_mensuracao', sistema_id=sistema._id, mensuracao_id=mensuracao._id) }}" class="btn btn-warning">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    
                     <form action="{{ url_for('main.delete_mensuracao', sistema_id=sistema._id, mensuracao_id=mensuracao._id) }}" method="post" class="d-inline">
-                        <button type="submit" class="btn btn-danger">Remover</button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </form>
+                    
                 </td>
             </tr>
             {% endfor %}

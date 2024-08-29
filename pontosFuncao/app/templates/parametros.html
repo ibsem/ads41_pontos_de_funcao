@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Configuração de Parâmetros{% endblock %}
 {% block content %}
-    <h1>Configuração de Parâmetros</h1>
+    <h3>Configuração de Parâmetros</h3>
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <div class="mb-3">
@@ -12,6 +12,9 @@
             {{ form.qtd_horas_ponto_funcao.label(class="form-label") }}
             {{ form.qtd_horas_ponto_funcao(class="form-control") }}
         </div>
-        <button type="submit" class="btn btn-primary">Atualizar Parâmetros</button>
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-arrow-repeat"></i>
+        </button>
+        
     </form>
 {% endblock %}

@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, send_file
 from .forms import ParametrosForm, TipoEntidadeForm, SistemaForm, MensuracaoForm
+from flask_weasyprint import HTML, render_pdf
 from . import mongo
 from bson.objectid import ObjectId
-from .utils import calcular_resumo, criar_pdf
+from .utils import calcular_resumo
+from flask_weasyprint import HTML, render_pdf
 
 main = Blueprint('main', __name__)
 
@@ -197,4 +199,34 @@ def delete_mensuracao(sistema_id, mensuracao_id):
     mongo.db.mensuracoes.delete_one({'_id': ObjectId(mensuracao_id)})
     flash('Mensuração removida com sucesso!', 'success')
     return redirect(url_for('main.mensuracoes', sistema_id=sistema_id))
+
+
+
+@main.route('/sistemas/<sistema_id>/relatorio/pdf')
+def relatorio_pdf(sistema_id):
+    sistema = mongo.db.sistemas.find_one_or_404({'_id': ObjectId(sistema_id)})
+    mensuracoes = list(mongo.db.mensuracoes.find({'sistema_id': ObjectId(sistema_id)}))
+
+    # Enriquecer os dados de cada mensuração com o tipo de entidade correspondente
+    for mensuracao in mensuracoes:
+        tipo_entidade = mongo.db.tipos_entidade.find_one({'_id': mensuracao['tipo_entidade_id']})
+        mensuracao['tipo_entidade'] = tipo_entidade
+
+    # Obter os parâmetros para o cálculo do resumo
+    parametros = mongo.db.parametros.find_one()
+    
+    if not parametros:
+        flash('Parâmetros não encontrados. Verifique as configurações.', 'danger')
+        return redirect(url_for('main.index'))
+
+    total_pontos, total_horas, custo_total = calcular_resumo(sistema, mensuracoes, parametros)
+
+    todas_entidades = list(mongo.db.tipos_entidade.find())
+
+    # Renderizar o template exclusivo para o PDF
+    rendered_html = render_template('relatorio_pdf.html', sistema=sistema, mensuracoes=mensuracoes, total_pontos=total_pontos,
+                                    total_horas=total_horas, custo_total=custo_total, parametros=parametros, todas_entidades=todas_entidades)
+    
+    # Gerar o PDF usando o HTML renderizado
+    return render_pdf(HTML(string=rendered_html))
 

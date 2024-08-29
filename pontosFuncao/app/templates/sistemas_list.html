@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Lista de Sistemas{% endblock %}
 {% block content %}
-    <h1>Sistemas</h1>
-    <a href="{{ url_for('main.create_sistema') }}" class="btn btn-primary">Adicionar Sistema</a>
+    <h3>Sistemas</h3>
     <table class="table table-striped mt-3">
         <thead>
             <tr>
@@ -11,7 +10,6 @@
                 <th>Cliente</th>
                 <th>Contato</th>
                 <th>Telefone</th>
-                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -22,13 +20,6 @@
                 <td>{{ sistema.cliente }}</td>
                 <td>{{ sistema.contato }}</td>
                 <td>{{ sistema.telefone }}</td>
-                <td>
-                    <a href="{{ url_for('main.edit_sistema', sistema_id=sistema._id) }}" class="btn btn-secondary">Editar</a>
-                    <a href="{{ url_for('main.mensuracoes', sistema_id=sistema._id) }}" class="btn btn-info">Medir</a>  <!-- Novo botão de Mensuração -->
-                    <form action="{{ url_for('main.delete_sistema', sistema_id=sistema._id) }}" method="post" class="d-inline">
-                        <button type="submit" class="btn btn-danger">Excluir</button>
-                    </form>
-                </td>
             </tr>
             {% endfor %}
         </tbody>
